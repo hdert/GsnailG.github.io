@@ -62,9 +62,20 @@ var prompts = [
 
 ]
 
+// Define another list which will hold the prompts
+var activePrompts = []
+
 function newPrompt() {
-    var randomNumber = Math.floor(Math.random() * (prompts.length));
-    document.getElementById('cardDisplay').innerHTML = prompts[randomNumber];
+    // set activePrompts to prompts if active prompts is empty
+    // this will happen for the first prompt, and if the user cycles through every prompt
+    if (activePrompts.length == 0) {
+        activePrompts = [...prompts];
+    }
+    var randomNumber = Math.floor(Math.random() * (activePrompts.length));
+    document.getElementById('cardDisplay').innerHTML = activePrompts[randomNumber];
+    // remove the prompt that was just displayed from activePrompts
+    // this will make sure the user doesn't get the same prompt twice in a while
+    activePrompts.splice((randomNumber), 1);
 }
 
 newPrompt();
